@@ -16,11 +16,11 @@ import qualified Data.Text.Lazy as TL
 -------------------------------------------------------------------------------
 
 instance Arbitrary TS.Text where
-    arbitrary = TS.pack <$> arbitrary
+    arbitrary = TS.pack <$> arbitrary `suchThat` ('\NUL' `notElem`)
     shrink xs = TS.pack <$> shrink (TS.unpack xs)
 
 instance Arbitrary TL.Text where
-    arbitrary = TL.pack <$> arbitrary
+    arbitrary = TL.pack <$> arbitrary `suchThat` ('\NUL' `notElem`)
     shrink xs = TL.pack <$> shrink (TL.unpack xs)
 
 instance CoArbitrary TS.Text where
